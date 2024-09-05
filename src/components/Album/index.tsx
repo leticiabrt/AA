@@ -13,6 +13,7 @@ export function Album({ album }: IAlbum) {
     useEffect(() => {
         async function getAlbumAssets() {
             const albumAssets = await MediaLibrary.getAssetsAsync({ album });
+            setAssets(albumAssets.assets);
         }
         getAlbumAssets();
     }, [album]);
@@ -20,7 +21,7 @@ export function Album({ album }: IAlbum) {
     return (
         <View key={album.id} style={styles.albumContainer}>
             <Text>
-                {album.title} -{album.assetCount ?? 'no'} assets
+                {album.title} - {album.assetCount ?? 'no'} assets
             </Text>
             <View style={styles.albumAssetsContainer}>
                 {assets && assets.map((asset) => (

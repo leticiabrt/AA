@@ -10,7 +10,7 @@ export function Imagens() {
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
     const [image, setImage] = useState<string | null>(null);
     async function getAlbums() {
-        if (permissionResponse && permissionResponse.status !== 'granted') {
+        if (permissionResponse && permissionResponse.status !== 'granted' && permissionResponse.accessPrivileges !== 'all') {
             await requestPermission();
         }
         const fetchedAlbums = await MediaLibrary.getAlbumsAsync({
@@ -37,6 +37,7 @@ export function Imagens() {
                     {image && <Image source={{ uri: image }} style={styles.image} />}
                 </View>
             </ComponentButtonInterface>
+            <ComponentButtonInterface onPressI={getAlbums} title="Buscar Álbuns" type='primary' />
             <ScrollView>
                 {albums && albums.map((album) => <Album album={album} />)}
             </ScrollView>
